@@ -24,7 +24,7 @@ import {
   Copy,
   CheckCircle,
 } from "lucide-react"
-import QRCode from "qrcode.react"
+import { QRCodeCanvas } from 'qrcode.react';
 import Web3 from "web3"
 import ScanAnalytics from "./scan-analytics"
 
@@ -516,8 +516,8 @@ export default function EmergencyTagAccess({
             <CardContent className="space-y-4">
               <div className="flex flex-col items-center space-y-4">
                 <div className="p-4 bg-white rounded-lg shadow-inner">
-                  <QRCode value={generateQRValue()} size={200} level="H" includeMargin={true} />
-                </div>
+                  <QRCodeCanvas value="https://example.com" />
+
 
                 <div className="text-center space-y-2">
                   <p className="text-sm text-gray-600">Scan this QR code to access emergency pet information</p>
