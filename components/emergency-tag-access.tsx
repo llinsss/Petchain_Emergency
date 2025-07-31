@@ -300,13 +300,18 @@ export default function EmergencyTagAccess({
   }
 
   const copyQRLink = () => {
-    const qrUrl = `${window.location.origin}/pet/${petId}`
-    navigator.clipboard.writeText(qrUrl)
-    setQrCopied(true)
-    setTimeout(() => setQrCopied(false), 2000)
+    const qrUrl = typeof window !== 'undefined' ? `${window.location.origin}/pet/${petId}` : `/pet/${petId}`
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(qrUrl)
+      setQrCopied(true)
+      setTimeout(() => setQrCopied(false), 2000)
+    }
   }
 
   const generateQRValue = () => {
+    if (typeof window === 'undefined') {
+      return `/pet/${petId}`
+    }
     return `${window.location.origin}/pet/${petId}`
   }
 
@@ -516,8 +521,8 @@ export default function EmergencyTagAccess({
             <CardContent className="space-y-4">
               <div className="flex flex-col items-center space-y-4">
                 <div className="p-4 bg-white rounded-lg shadow-inner">
-                  <QRCodeCanvas value="https://example.com" />
-
+                  <QRCodeCanvas value={generateQRValue()} />
+                </div>
 
                 <div className="text-center space-y-2">
                   <p className="text-sm text-gray-600">Scan this QR code to access emergency pet information</p>
